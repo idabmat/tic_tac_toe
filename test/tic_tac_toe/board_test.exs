@@ -111,4 +111,47 @@ defmodule TicTacToe.BoardTest do
       [:player1, nil, :player1]
     ]
   end
+
+  test "Size" do
+    board = [
+      [:player1, :computer, :player1],
+      [nil, nil, :computer],
+      [:player1, :computer, :player1]
+    ]
+    assert Board.size(board) == 3
+  end
+
+  test "get indexes from position" do
+    board = [
+      [:player1, :computer, :player1],
+      [nil, nil, :computer],
+      [:player1, :computer, :player1]
+    ]
+    assert Board.indexes_from_position(1, board) == {0, 0}
+    assert Board.indexes_from_position(2, board) == {0, 1}
+    assert Board.indexes_from_position(3, board) == {0, 2}
+    assert Board.indexes_from_position(4, board) == {1, 0}
+    assert Board.indexes_from_position(5, board) == {1, 1}
+    assert Board.indexes_from_position(6, board) == {1, 2}
+    assert Board.indexes_from_position(7, board) == {2, 0}
+    assert Board.indexes_from_position(8, board) == {2, 1}
+    assert Board.indexes_from_position(9, board) == {2, 2}
+  end
+
+  test "get position from indexes" do
+    board = [
+      [:player1, :computer, :player1],
+      [nil, nil, :computer],
+      [:player1, :computer, :player1]
+    ]
+    assert Board.position_from_indexes({0, 0}, board) == 1
+    assert Board.position_from_indexes({0, 1}, board) == 2
+    assert Board.position_from_indexes({0, 2}, board) == 3
+    assert Board.position_from_indexes({1, 0}, board) == 4
+    assert Board.position_from_indexes({1, 1}, board) == 5
+    assert Board.position_from_indexes({1, 2}, board) == 6
+    assert Board.position_from_indexes({2, 0}, board) == 7
+    assert Board.position_from_indexes({2, 1}, board) == 8
+    assert Board.position_from_indexes({2, 2}, board) == 9
+  end
 end

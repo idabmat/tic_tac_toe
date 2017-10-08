@@ -72,6 +72,20 @@ defmodule TicTacToe.GameTest do
     ]
   end
 
+  test "computer move" do
+    board = [
+      [:computer, :player1, nil],
+      [:player1, :computer, :computer],
+      [:player1, :computer, :player1]
+    ]
+    game = %Game{board: board} |> Game.computer_move
+    assert game.board == [
+      [:computer, :player1, :computer],
+      [:player1, :computer, :computer],
+      [:player1, :computer, :player1]
+    ]
+  end
+
   test "invalid move does not change the board" do
     board = [
       [:computer, :player1, nil],
@@ -100,5 +114,30 @@ defmodule TicTacToe.GameTest do
     ]
     game = %Game{board: board, current_player: :player1} |> Game.player_move(1)
     assert game.current_player == :player1
+  end
+
+  test "valid move changes calculates the winner" do
+    board = [
+      [:computer, :player1, nil],
+      [:player1, :computer, :computer],
+      [:player1, :computer, :player1]
+    ]
+    game = %Game{board: board, current_player: :player1} |> Game.player_move(3)
+    assert game.winner == :draw
+  end
+
+  test "game is over when there is a winner" do
+    game = %Game{winner: :player1}
+    assert Game.over?(game) == true
+  end
+
+  test "game is over when there is a draw" do
+    game = %Game{winner: :draw}
+    assert Game.over?(game) == true
+  end
+
+  test "game is not over otherwise" do
+    game = %Game{winner: nil}
+    assert Game.over?(game) == false
   end
 end

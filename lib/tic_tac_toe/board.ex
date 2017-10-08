@@ -9,7 +9,7 @@ defmodule TicTacToe.Board do
 
   def receive_move(board, _, position) when position not in 1..9, do: board
   def receive_move(board, player, position) do
-    { row_index, column_index } = indexes_from_position(position)
+    { row_index, column_index } = indexes_from_position(position, board)
     empty? = cell_empty?(board, row_index, column_index)
     insert_into(board, row_index, column_index, player, empty?)
   end
@@ -33,10 +33,14 @@ defmodule TicTacToe.Board do
     == nil
   end
 
-  def indexes_from_position(position) do
-    row_index   = div(position - 1, 3)
-    column_index = rem(position - 1, 3)
+  def indexes_from_position(position, board) do
+    row_index   = div(position - 1, size(board))
+    column_index = rem(position - 1, size(board))
     { row_index, column_index }
+  end
+
+  def position_from_indexes({row_index, column_index}, board) do
+    row_index * size(board) + column_index + 1
   end
 
   def row(board, position), do: board |> Enum.at(position - 1)
@@ -66,7 +70,7 @@ defmodule TicTacToe.Board do
     rows(board) ++ columns(board) ++ diagonals(board)
   end
 
-  defp size(board) do
+  def size(board) do
     length(board)
   end
 
