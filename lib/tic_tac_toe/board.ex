@@ -1,0 +1,78 @@
+defmodule TicTacToe.Board do
+  def new() do
+    [
+      [nil, nil, nil],
+      [nil, nil, nil],
+      [nil, nil, nil]
+    ]
+  end
+
+  def receive_move(board, _, position) when position not in 1..9, do: board
+  def receive_move(board, player, position) do
+    { row_index, column_index } = indexes_from_position(position)
+    empty? = cell_empty?(board, row_index, column_index)
+    insert_into(board, row_index, column_index, player, empty?)
+  end
+
+  def insert_into(board, _, _, _, false), do: board
+  def insert_into(board, row_index, column_index, player, _empty) do
+    new_row = build_new_row(board, row_index, column_index, player)
+    board |> List.replace_at(row_index, new_row)
+  end
+
+  def build_new_row(board, row_index, column_index, player) do
+    board
+    |> Enum.at(row_index)
+    |> List.replace_at(column_index, player)
+  end
+
+  def cell_empty?(board, row_index, column_index) do
+    board
+    |> Enum.at(row_index)
+    |> Enum.at(column_index)
+    == nil
+  end
+
+  def indexes_from_position(position) do
+    row_index   = div(position - 1, 3)
+    column_index = rem(position - 1, 3)
+    { row_index, column_index }
+  end
+
+  def row(board, position), do: board |> Enum.at(position - 1)
+  def rows(board), do: board
+
+  def columns(board), do: board |> transpose |> rows
+  def column(board, position), do: board |> transpose |> row(position)
+
+  def diagonal(board, 1) do
+    for x <- 0..(size(board) - 1), do: board |> Enum.at(x) |> Enum.at(x)
+  end
+
+  def diagonal(board, 2) do
+    for {x, y} <- Enum.zip(0..(size(board) - 1), (size(board) - 1)..0),
+        do: board |> Enum.at(x) |> Enum.at(y)
+  end
+
+  def diagonals(board), do: [diagonal(board, 1), diagonal(board, 2)]
+
+  def empty_cells(board) do
+    for x <- 0..(size(board) - 1), y <- 0..(size(board) - 1),
+        board |> Enum.at(x) |> Enum.at(y) == nil,
+        do: {x, y}
+  end
+
+  def triplets(board) do
+    rows(board) ++ columns(board) ++ diagonals(board)
+  end
+
+  defp size(board) do
+    length(board)
+  end
+
+  defp transpose(board) do
+    board
+    |> Enum.zip
+    |> Enum.map(&Tuple.to_list/1)
+  end
+end
