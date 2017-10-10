@@ -5,11 +5,11 @@ defmodule TicTacToe.Game do
   defstruct(
     board: Board.new(),
     winner: nil,
-    current_player: Enum.random([:player1, :computer])
+    current_player: nil
   )
 
   def new() do
-    %TicTacToe.Game{}
+    %TicTacToe.Game{current_player: Enum.random([:player1, :computer])}
   end
 
   def score(game = %{board: board}) do

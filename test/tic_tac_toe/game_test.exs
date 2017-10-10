@@ -64,7 +64,7 @@ defmodule TicTacToe.GameTest do
       [:player1, :computer, :computer],
       [:player1, :computer, :player1]
     ]
-    game = %Game{board: board} |> Game.player_move(3)
+    game = %Game{board: board, current_player: :player1} |> Game.player_move(3)
     assert game.board == [
       [:computer, :player1, :player1],
       [:player1, :computer, :computer],
@@ -78,7 +78,7 @@ defmodule TicTacToe.GameTest do
       [:player1, :computer, :computer],
       [:player1, :computer, :player1]
     ]
-    game = %Game{board: board} |> Game.computer_move
+    game = %Game{board: board, current_player: :computer} |> Game.computer_move
     assert game.board == [
       [:computer, :player1, :computer],
       [:player1, :computer, :computer],
