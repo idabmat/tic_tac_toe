@@ -1,7 +1,13 @@
 defmodule TicTacToe do
-  alias TicTacToe.Game
-
   def new_game() do
-    Game.new()
+    Supervisor.start_child(TicTacToe.Supervisor, [])
+  end
+
+  def player_move(game_pid, position) do
+    GenServer.call(game_pid, { :player_move, position })
+  end
+
+  def computer_move(game_pid) do
+    GenServer.call(game_pid, { :computer_move }, 10_000)
   end
 end
