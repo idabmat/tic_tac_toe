@@ -2,13 +2,16 @@ defmodule TicTacToe.Server do
   use GenServer
   alias TicTacToe.Game
 
-  def start_link(), do: start_link(:ok)
-  def start_link(_) do
-    GenServer.start_link(__MODULE__, nil)
+  def start_link(opts \\ []) do
+    GenServer.start_link(__MODULE__, :ok, opts)
   end
 
   def init(_) do
     { :ok, Game.new() }
+  end
+
+  def handle_call({ :game_state }, _from, game) do
+    { :reply, game, game }
   end
 
   def handle_call({ :player_move, position }, _from, game) do
