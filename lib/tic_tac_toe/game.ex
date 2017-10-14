@@ -19,17 +19,18 @@ defmodule TicTacToe.Game do
     update_winner(game, winner)
   end
 
-  def player_move(game, position), do: make_move(game, :player1, position)
+  def player_move(game, position), do: make_move(game, :player1, position, game.current_player == :player1)
   def computer_move(game) do
     position = Ai.choose_next_position(game)
     computer_move(game, position)
   end
-  def computer_move(game, position), do: make_move(game, :computer, position)
+  def computer_move(game, position), do: make_move(game, :computer, position, game.current_player == :computer)
 
   def over?(%{winner: nil}), do: false
   def over?(_),              do: true
 
-  defp make_move(game = %{board: board}, player, position) do
+  defp make_move(game, _, _, false), do: game
+  defp make_move(game = %{board: board}, player, position, _player_can_move) do
     new_board = board |> Board.receive_move(player, position)
     update_board(game, new_board) |> score
   end
