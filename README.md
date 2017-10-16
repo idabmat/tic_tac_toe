@@ -1,6 +1,9 @@
 # TicTacToe
 
-**TODO: Add description**
+Elixir implementation of a Tic Tac Toe game.
+
+  * [WebSocket API](https://github.com/idabmat/tic_tac_toe_channel)
+  * [React Client](https://github.com/idabmat/tic_tac_toe_client)
 
 ## Installation
 
