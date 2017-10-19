@@ -7,13 +7,13 @@ Elixir implementation of a Tic Tac Toe game.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `tic_tac_toe` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `tic_tac_toe` to your list of
+dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:tic_tac_toe, "~> 0.1.0"}
+    {:tic_tac_toe, "~> 1.0.0"}
   ]
 end
 ```
