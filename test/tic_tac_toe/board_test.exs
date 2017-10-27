@@ -71,6 +71,11 @@ defmodule TicTacToe.BoardTest do
       [nil, nil, nil]
     ]
   end
+  
+  test "rejects out of bound moves for larger boards" do
+    board = Board.new(5)
+    assert Board.receive_move(board, :computer, 54) == board
+  end
 
   test "has rows" do
     row1 = [:player1, nil, nil]
@@ -214,5 +219,25 @@ defmodule TicTacToe.BoardTest do
     assert Board.position_from_indexes({2, 0}, board) == 7
     assert Board.position_from_indexes({2, 1}, board) == 8
     assert Board.position_from_indexes({2, 2}, board) == 9
+  end
+  
+  test "get position from indexes for a board of size 4" do
+    board = empty_board(4)
+    assert Board.position_from_indexes({0, 0}, board) == 1
+    assert Board.position_from_indexes({0, 1}, board) == 2
+    assert Board.position_from_indexes({0, 2}, board) == 3
+    assert Board.position_from_indexes({0, 3}, board) == 4
+    assert Board.position_from_indexes({1, 0}, board) == 5
+    assert Board.position_from_indexes({1, 1}, board) == 6
+    assert Board.position_from_indexes({1, 2}, board) == 7
+    assert Board.position_from_indexes({1, 3}, board) == 8
+    assert Board.position_from_indexes({2, 0}, board) == 9
+    assert Board.position_from_indexes({2, 1}, board) == 10
+    assert Board.position_from_indexes({2, 2}, board) == 11
+    assert Board.position_from_indexes({2, 3}, board) == 12
+    assert Board.position_from_indexes({3, 0}, board) == 13
+    assert Board.position_from_indexes({3, 1}, board) == 14
+    assert Board.position_from_indexes({3, 2}, board) == 15
+    assert Board.position_from_indexes({3, 3}, board) == 16
   end
 end

@@ -25,7 +25,29 @@ defmodule TicTacToe.GameTest do
       [nil, nil, nil]
     ]
     game = %Game{board: board} |> Game.score
-    assert game.winner== :computer
+    assert game.winner == :computer
+  end
+  
+  test "Identify when the computer won with a board of 4" do
+    board = [
+      [:computer, :computer, :computer, :computer],
+      [nil, nil, nil, nil],
+      [nil, nil, nil, nil],
+      [nil, nil, nil, nil]
+    ]
+    game = %Game{board: board} |> Game.score
+    assert game.winner == :computer
+  end
+  
+  test "Identify when the computer hasn't yet won with a board of 4" do
+    board = [
+      [:computer, :computer, :computer, nil],
+      [nil, nil, nil, nil],
+      [nil, nil, nil, nil],
+      [nil, nil, nil, nil]
+    ]
+    game = %Game{board: board} |> Game.score
+    assert game.winner == nil
   end
 
   test "Identify when the player won" do

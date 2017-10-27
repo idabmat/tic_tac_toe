@@ -21,7 +21,7 @@ defmodule TicTacToe.Board do
     [h | row]
   end
 
-  def receive_move(board, _, position) when position not in 1..9, do: board
+  def receive_move(board, _, position) when position not in 1..(length(board)*length(board)), do: board
   def receive_move(board, player, position) do
     { row_index, column_index } = indexes_from_position(position, board)
     empty? = cell_empty?(board, row_index, column_index)
