@@ -1,10 +1,24 @@
 defmodule TicTacToe.Board do
-  def new() do
+  def new(), do: new(3)
+  def new(3) do
     [
       [nil, nil, nil],
       [nil, nil, nil],
       [nil, nil, nil]
     ]
+  end
+  def new(size) do
+    new(size - 1)
+    |> Enum.map(&prepend_nil/1)
+    |> duplicate_first_row
+  end
+
+  defp prepend_nil(row) do
+    [nil | row]
+  end
+
+  defp duplicate_first_row(row = [h|_t]) do
+    [h | row]
   end
 
   def receive_move(board, _, position) when position not in 1..9, do: board

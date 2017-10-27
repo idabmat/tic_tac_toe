@@ -2,23 +2,29 @@ defmodule TicTacToe.BoardTest do
   use ExUnit.Case
   alias TicTacToe.Board
 
-  test "initializes an empty board" do
-    empty_board = [
+  def empty_board(3) do
+    [
       [nil, nil, nil],
       [nil, nil, nil],
       [nil, nil, nil]
     ]
-    assert Board.new == empty_board
   end
-  
-  test "can initialize an empty board with 16 cells" do
-    empty_board = [
+
+  def empty_board(4) do
+    [
       [nil, nil, nil, nil],
       [nil, nil, nil, nil],
       [nil, nil, nil, nil],
       [nil, nil, nil, nil]
     ]
-    assert Board.new(4) == empty_board
+  end
+
+  test "initializes an empty board" do
+    assert Board.new == empty_board(3)
+  end
+  
+  test "can initialize an empty board with 16 cells" do
+    assert Board.new(4) == empty_board(4)
   end
 
   test "accepts a move" do
@@ -27,6 +33,16 @@ defmodule TicTacToe.BoardTest do
       [:player1, nil, nil],
       [nil, nil, nil],
       [nil, nil, nil]
+    ]
+  end
+
+  test "accepts a move on larger boards" do
+    board = empty_board(4)
+    assert Board.receive_move(board, :player1, 10) == [
+      [nil, nil, nil, nil],
+      [nil, nil, nil, nil],
+      [nil, :player1, nil, nil],
+      [nil, nil, nil, nil]
     ]
   end
 
@@ -122,13 +138,23 @@ defmodule TicTacToe.BoardTest do
     ]
   end
 
-  test "Size" do
+  test "Size is 3" do
     board = [
       [:player1, :computer, :player1],
       [nil, nil, :computer],
       [:player1, :computer, :player1]
     ]
     assert Board.size(board) == 3
+  end
+
+  test "Size is 4" do
+    board = [
+      [:player1, :computer, :player1, nil],
+      [nil, nil, :computer, nil],
+      [:player1, :computer, :player1, :computer],
+      [nil, nil, :computer, nil],
+    ]
+    assert Board.size(board) == 4
   end
 
   test "get indexes from position" do
@@ -146,6 +172,31 @@ defmodule TicTacToe.BoardTest do
     assert Board.indexes_from_position(7, board) == {2, 0}
     assert Board.indexes_from_position(8, board) == {2, 1}
     assert Board.indexes_from_position(9, board) == {2, 2}
+  end
+
+  test "get indexes from position with a board of size 4" do
+    board = [
+      [:player1, :computer, :player1, nil],
+      [nil, nil, :computer, nil],
+      [:player1, :computer, :player1, :computer],
+      [nil, nil, :computer, nil],
+    ]
+    assert Board.indexes_from_position(1, board) == {0, 0}
+    assert Board.indexes_from_position(2, board) == {0, 1}
+    assert Board.indexes_from_position(3, board) == {0, 2}
+    assert Board.indexes_from_position(4, board) == {0, 3}
+    assert Board.indexes_from_position(5, board) == {1, 0}
+    assert Board.indexes_from_position(6, board) == {1, 1}
+    assert Board.indexes_from_position(7, board) == {1, 2}
+    assert Board.indexes_from_position(8, board) == {1, 3}
+    assert Board.indexes_from_position(9, board) == {2, 0}
+    assert Board.indexes_from_position(10, board) == {2, 1}
+    assert Board.indexes_from_position(11, board) == {2, 2}
+    assert Board.indexes_from_position(12, board) == {2, 3}
+    assert Board.indexes_from_position(13, board) == {3, 0}
+    assert Board.indexes_from_position(14, board) == {3, 1}
+    assert Board.indexes_from_position(15, board) == {3, 2}
+    assert Board.indexes_from_position(16, board) == {3, 3}
   end
 
   test "get position from indexes" do
