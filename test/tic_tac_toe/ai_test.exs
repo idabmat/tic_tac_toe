@@ -76,6 +76,17 @@ defmodule TicTacToe.AiTest do
     game = %Game{board: board, current_player: :computer}
     assert Ai.choose_next_position(game) == 9
   end
+  
+  test "plays to defend itself on larger boards" do
+    board = [
+      [nil      , :computer, :player1, :computer],
+      [:computer, :computer, :player1, :player1],
+      [:player1 , :player1 , nil     , :computer],
+      [:player1 , :player1 , :player1, :computer],
+    ]
+    game = %Game{board: board, current_player: :computer}
+    assert Ai.choose_next_position(game) == 11
+  end
 
   test "dont pick losing moves" do
     board = [
