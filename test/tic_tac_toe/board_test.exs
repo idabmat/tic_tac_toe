@@ -10,6 +10,16 @@ defmodule TicTacToe.BoardTest do
     ]
     assert Board.new == empty_board
   end
+  
+  test "can initialize an empty board with 16 cells" do
+    empty_board = [
+      [nil, nil, nil, nil],
+      [nil, nil, nil, nil],
+      [nil, nil, nil, nil],
+      [nil, nil, nil, nil]
+    ]
+    assert Board.new(4) == empty_board
+  end
 
   test "accepts a move" do
     board = Board.new()
