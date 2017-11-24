@@ -1,6 +1,6 @@
 defmodule TicTacToe do
-  def new_game() do
-    Supervisor.start_child(TicTacToe.Supervisor, [])
+  def new_game(game_mode \\ :original) do
+    Supervisor.start_child(TicTacToe.Supervisor, [game_mode])
   end
 
   def game_state(game_pid) do

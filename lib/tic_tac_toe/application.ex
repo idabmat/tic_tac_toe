@@ -1,11 +1,11 @@
 defmodule TicTacToe.Application do
   use Application
 
-  def start(_type, _args) do
+  def start(_type, args) do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(TicTacToe.Server, []),
+      worker(TicTacToe.Server, args),
     ]
 
     options = [

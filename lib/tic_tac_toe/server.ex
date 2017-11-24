@@ -3,11 +3,11 @@ defmodule TicTacToe.Server do
   alias TicTacToe.Game
 
   def start_link(opts \\ []) do
-    GenServer.start_link(__MODULE__, :ok, opts)
+    GenServer.start_link(__MODULE__, opts)
   end
 
-  def init(_) do
-    { :ok, Game.new() }
+  def init(game_mode) do
+    { :ok, Game.new(game_mode) }
   end
 
   def handle_call({ :game_state }, _from, game) do

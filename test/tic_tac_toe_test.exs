@@ -2,7 +2,7 @@ defmodule TicTacToeTest do
   use ExUnit.Case
 
   setup do
-    {:ok, pid} = TicTacToe.new_game()
+    {:ok, pid} = TicTacToe.new_game(:original)
     %{pid: pid}
   end
 

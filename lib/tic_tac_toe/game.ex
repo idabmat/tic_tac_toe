@@ -1,21 +1,21 @@
 defmodule TicTacToe.Game do
   alias TicTacToe.Ai
   alias TicTacToe.Board
+  alias TicTacToe.Scoring
 
   defstruct(
     board: Board.new(),
     winner: nil,
-    current_player: nil
+    current_player: nil,
+    game_mode: :original
   )
 
-  def new() do
-    %TicTacToe.Game{current_player: Enum.random([:player1, :computer])}
+  def new(game_mode \\ :original) do
+    %TicTacToe.Game{current_player: Enum.random([:player1, :computer]), game_mode: game_mode}
   end
 
-  def score(game = %{board: board}) do
-    winner = board
-             |> Board.triplets
-             |> winner?
+  def score(game) do
+    winner = Scoring.winner(game)
     update_winner(game, winner)
   end
 
@@ -33,27 +33,6 @@ defmodule TicTacToe.Game do
   defp make_move(game = %{board: board}, player, position, _player_can_move) do
     new_board = board |> Board.receive_move(player, position)
     update_board(game, new_board) |> score
-  end
-
-  defp winner?(triplets) do
-    cond do
-      winner?(triplets, :computer) -> :computer
-      winner?(triplets, :player1)  -> :player1
-      draw?(triplets)               -> :draw
-      true                         -> nil
-    end
-  end
-
-  defp winner?(triplets, player) do
-    Enum.any?(triplets, fn (x) ->
-      Enum.all?(x, fn (y) ->
-        y == player
-      end)
-    end)
-  end
-
-  defp draw?(triplets) do
-    Enum.all?(triplets, &Enum.all?/1)
   end
 
   defp update_winner(game, winner) do
