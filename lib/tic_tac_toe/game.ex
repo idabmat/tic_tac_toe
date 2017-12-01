@@ -30,10 +30,11 @@ defmodule TicTacToe.Game do
   def over?(_),              do: true
 
   defp make_move(game, _, _, false), do: game
-  defp make_move(game = %{board: board}, player, position, _player_can_move) do
+  defp make_move(game = %{board: board, winner: nil}, player, position, _player_can_move) do
     new_board = board |> Board.receive_move(player, position)
     update_board(game, new_board) |> score
   end
+  defp make_move(game, _, _, _), do: game
 
   defp update_winner(game, winner) do
     %{ game | winner: winner }

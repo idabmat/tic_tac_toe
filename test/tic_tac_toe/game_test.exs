@@ -153,6 +153,21 @@ defmodule TicTacToe.GameTest do
     assert Game.over?(game) == true
   end
 
+  test "cannot move after game over" do
+    board = [
+      [:player1, :player1, :player1],
+      [nil, nil, nil],
+      [nil, nil, nil]
+    ]
+    game = %Game{winner: :player1, board: board, current_player: :computer} |> Game.computer_move
+    assert game.board == board
+  end
+
+  test "invalid moves does not change the current player" do
+    game = %Game{winner: :player1, current_player: :computer} |> Game.computer_move
+    assert game.current_player == :computer
+  end
+
   test "game is over when there is a draw" do
     game = %Game{winner: :draw}
     assert Game.over?(game) == true
