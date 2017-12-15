@@ -25,7 +25,7 @@ defmodule TicTacToe.ScoringTest do
       assert Scoring.winner(game) == :player1
     end
 
-    test "draw won" do
+    test "game tied" do
       game = %TicTacToe.Game{
         board: [
           [:computer, :player1, :computer],
@@ -112,6 +112,18 @@ defmodule TicTacToe.ScoringTest do
         game_mode: :misere
       }
       assert Scoring.winner(game) == :player1
+    end
+
+    test "game tied" do
+      game = %TicTacToe.Game{
+        board: [
+          [:computer, :player1, :computer],
+          [:computer, :player1, :computer],
+          [:player1, :computer, :player1],
+        ],
+        game_mode: :misere
+      }
+      assert Scoring.winner(game) == :draw
     end
   end
 end

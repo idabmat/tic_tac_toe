@@ -18,8 +18,11 @@ defmodule TicTacToe.Scoring do
     |> announce_winner(current_player)
   end
 
-  def winner(%{game_mode: :misere}) do
-    :computer
+  def winner(%{game_mode: :misere, board: board}) do
+    case winner(%{game_mode: :original, board: board}) do
+      :computer -> :player1
+      :player1 -> :computer 
+    end
   end
 
   defp announce_winner(false, _),                 do: nil
