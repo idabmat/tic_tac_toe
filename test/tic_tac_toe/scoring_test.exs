@@ -125,5 +125,17 @@ defmodule TicTacToe.ScoringTest do
       }
       assert Scoring.winner(game) == :draw
     end
+
+    test "game not finished" do
+      game = %TicTacToe.Game{
+        board: [
+          [:computer, :player1, :computer],
+          [:computer, :player1, :computer],
+          [nil, :computer, :player1],
+        ],
+        game_mode: :misere
+      }
+      assert Scoring.winner(game) == nil
+    end
   end
 end
