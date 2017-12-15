@@ -20,9 +20,9 @@ defmodule TicTacToe.Scoring do
 
   def winner(%{game_mode: :misere, board: board}) do
     case winner(%{game_mode: :original, board: board}) do
-      :computer -> :player1
-      :player1 -> :computer
-      :draw -> :draw 
+      :computer    -> :player1
+      :player1     -> :computer
+      other_result -> other_result
     end
   end
 

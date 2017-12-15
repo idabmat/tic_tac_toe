@@ -25,6 +25,18 @@ defmodule TicTacToeTest do
     end
   end
 
+  describe "Misere game" do
+    setup do
+      {:ok, pid} = TicTacToe.new_game(:misere)
+      %{pid: pid}
+    end
+
+    test "play a game", %{pid: pid} do
+      game = TicTacToe.game_state(pid)
+      play_misere_game(game.current_player, pid)
+    end
+  end
+
   def play_original_game(:computer, pid) do
     game = TicTacToe.computer_move(pid)
     assert game.board == [
@@ -186,6 +198,23 @@ defmodule TicTacToeTest do
     game = TicTacToe.computer_move(pid)
     assert game.board == [
       [:player1, :computer, :player1],
+      [nil      , nil, nil     ],
+      [nil      , nil      , nil     ]
+    ]
+  end
+
+  def play_misere_game(:computer, pid) do
+    game = TicTacToe.computer_move(pid)
+    assert game.board == [
+      [nil, nil, nil],
+      [nil      , :computer, nil     ],
+      [nil      , nil      , nil     ]
+    ]
+  end
+  def play_misere_game(:player1, pid) do
+    game = TicTacToe.player_move(pid, 1)
+    assert game.board == [
+      [:player1, nil, nil],
       [nil      , nil, nil     ],
       [nil      , nil      , nil     ]
     ]
