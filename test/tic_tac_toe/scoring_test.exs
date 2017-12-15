@@ -88,4 +88,18 @@ defmodule TicTacToe.ScoringTest do
       assert Scoring.winner(game) == nil
     end
   end
+
+  describe "Misere" do
+    test "computer won" do
+      game = %TicTacToe.Game{
+        board: [
+          [:player1, :player1, :player1],
+          [nil, nil, nil],
+          [nil, nil, nil],
+        ],
+        game_mode: :misere
+      }
+      assert Scoring.winner(game) == :computer
+    end
+  end
 end
