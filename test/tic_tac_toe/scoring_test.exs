@@ -25,7 +25,7 @@ defmodule TicTacToe.ScoringTest do
       assert Scoring.winner(game) == :player1
     end
 
-    test "draw won" do
+    test "game tied" do
       game = %TicTacToe.Game{
         board: [
           [:computer, :player1, :computer],
@@ -84,6 +84,56 @@ defmodule TicTacToe.ScoringTest do
         ],
         current_player: :computer,
         game_mode: :notakto
+      }
+      assert Scoring.winner(game) == nil
+    end
+  end
+
+  describe "Misere" do
+    test "computer won" do
+      game = %TicTacToe.Game{
+        board: [
+          [:player1, :player1, :player1],
+          [nil, nil, nil],
+          [nil, nil, nil],
+        ],
+        game_mode: :misere
+      }
+      assert Scoring.winner(game) == :computer
+    end
+
+    test "player won" do
+      game = %TicTacToe.Game{
+        board: [
+          [:computer, :computer, :computer],
+          [nil, nil, nil],
+          [nil, nil, nil],
+        ],
+        game_mode: :misere
+      }
+      assert Scoring.winner(game) == :player1
+    end
+
+    test "game tied" do
+      game = %TicTacToe.Game{
+        board: [
+          [:computer, :player1, :computer],
+          [:computer, :player1, :computer],
+          [:player1, :computer, :player1],
+        ],
+        game_mode: :misere
+      }
+      assert Scoring.winner(game) == :draw
+    end
+
+    test "game not finished" do
+      game = %TicTacToe.Game{
+        board: [
+          [:computer, :player1, :computer],
+          [:computer, :player1, :computer],
+          [nil, :computer, :player1],
+        ],
+        game_mode: :misere
       }
       assert Scoring.winner(game) == nil
     end

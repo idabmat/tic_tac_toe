@@ -31,6 +31,7 @@ defmodule TicTacToe.Ai do
     |> Enum.min
   end
 
+  def choose_next_position(%{game_mode: :misere, board: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]}), do: 5
   def choose_next_position(%{board: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]}), do: 1
   def choose_next_position(game) do
     game
