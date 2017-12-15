@@ -210,6 +210,37 @@ defmodule TicTacToeTest do
       [nil      , :computer, nil     ],
       [nil      , nil      , nil     ]
     ]
+    game = TicTacToe.player_move(pid, 1)
+    assert game.board == [
+      [:player1, nil, nil],
+      [nil      , :computer, nil     ],
+      [nil      , nil      , nil     ]
+    ]
+    game = TicTacToe.computer_move(pid)
+    assert game.board == [
+      [:player1, nil, nil],
+      [nil      , :computer, nil     ],
+      [nil      , nil      , :computer]
+    ]
+    game = TicTacToe.player_move(pid, 3)
+    assert game.board == [
+      [:player1, nil, :player1],
+      [nil      , :computer, nil     ],
+      [nil      , nil      , :computer]
+    ]
+    game = TicTacToe.computer_move(pid)
+    assert game.board == [
+      [:player1, nil, :player1],
+      [nil      , :computer, :computer],
+      [nil      , nil      , :computer]
+    ]
+    game = TicTacToe.player_move(pid, 2)
+    assert game.board == [
+      [:player1, :player1, :player1],
+      [nil      , :computer, :computer],
+      [nil      , nil      , :computer]
+    ]
+    assert game.winner == :computer
   end
   def play_misere_game(:player1, pid) do
     game = TicTacToe.player_move(pid, 1)
@@ -218,5 +249,42 @@ defmodule TicTacToeTest do
       [nil      , nil, nil     ],
       [nil      , nil      , nil     ]
     ]
+    game = TicTacToe.computer_move(pid)
+    assert game.board == [
+      [:player1, :computer, nil],
+      [nil      , nil, nil     ],
+      [nil      , nil      , nil     ]
+    ]
+    game = TicTacToe.player_move(pid, 3)
+    assert game.board == [
+      [:player1, :computer, :player1],
+      [nil      , nil, nil     ],
+      [nil      , nil      , nil     ]
+    ]
+    game = TicTacToe.computer_move(pid)
+    assert game.board == [
+      [:player1, :computer, :player1],
+      [:computer      , nil, nil     ],
+      [nil      , nil      , nil     ]
+    ]
+    game = TicTacToe.player_move(pid, 6)
+    assert game.board == [
+      [:player1, :computer, :player1],
+      [:computer , nil, :player1],
+      [nil      , nil      , nil     ]
+    ]
+    game = TicTacToe.computer_move(pid)
+    assert game.board == [
+      [:player1, :computer, :player1],
+      [:computer, nil, :player1],
+      [:computer, nil      , nil     ]
+    ]
+    game = TicTacToe.player_move(pid, 9)
+    assert game.board == [
+      [:player1, :computer, :player1],
+      [:computer, nil, :player1],
+      [:computer, nil      , :player1     ]
+    ]
+    assert game.winner == :computer
   end
 end

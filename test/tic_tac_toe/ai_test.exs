@@ -96,4 +96,14 @@ defmodule TicTacToe.AiTest do
     game = %Game{board: board, current_player: :computer}
     assert Ai.choose_next_position(game) in [1, 3, 7, 9]
   end
+
+  test "when playing misere it selects middle as first move" do
+    board = [
+      [nil, nil, nil],
+      [nil, nil, nil],
+      [nil, nil, nil]
+    ]
+    game = %Game{board: board, current_player: :computer, game_mode: :misere}
+    assert Ai.choose_next_position(game) == 5
+  end
 end
