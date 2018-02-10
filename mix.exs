@@ -8,25 +8,25 @@ defmodule TicTacToe.Mixfile do
       description: "A TicTacToe game engine",
       package: package(),
       elixir: "~> 1.5",
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       deps: deps(),
       source_url: "https://github.com/idabmat/tic_tac_toe",
-      homepage_url: "https://github.com/idabmat/tic_tac_toe",
+      homepage_url: "https://github.com/idabmat/tic_tac_toe"
     ]
   end
 
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      mod: { TicTacToe.Application, [] },
-      extra_applications: [:logger],
+      mod: {TicTacToe.Application, []},
+      extra_applications: [:logger]
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps() do
     [
-      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
 
@@ -34,7 +34,7 @@ defmodule TicTacToe.Mixfile do
     [
       licenses: ["MIT"],
       maintainers: ["idabmat@gmail.com"],
-      links: %{"GitHub" => "https://github.com/idabmat/tic_tac_toe"},
+      links: %{"GitHub" => "https://github.com/idabmat/tic_tac_toe"}
     ]
   end
 end

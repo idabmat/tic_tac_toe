@@ -12,7 +12,9 @@ defmodule TicTacToe.ServerTest do
       current_player: :computer,
       winner: nil
     }
-    assert Server.handle_call({ :game_state }, :ok, current_game) == {:reply, current_game, current_game}
+
+    assert Server.handle_call({:game_state}, :ok, current_game) ==
+             {:reply, current_game, current_game}
   end
 
   test "handles player_move call" do
@@ -25,6 +27,7 @@ defmodule TicTacToe.ServerTest do
       current_player: :player1,
       winner: nil
     }
+
     new_game = %TicTacToe.Game{
       board: [
         [nil, nil, nil],
@@ -34,6 +37,7 @@ defmodule TicTacToe.ServerTest do
       current_player: :computer,
       winner: nil
     }
+
     assert Server.handle_call({:player_move, 5}, :ok, old_game) == {:reply, new_game, new_game}
   end
 
@@ -47,6 +51,7 @@ defmodule TicTacToe.ServerTest do
       current_player: :computer,
       winner: nil
     }
+
     new_game = %TicTacToe.Game{
       board: [
         [:player1, :computer, nil],
@@ -56,6 +61,7 @@ defmodule TicTacToe.ServerTest do
       current_player: :player1,
       winner: nil
     }
-    assert Server.handle_call({:computer_move }, :ok, old_game) == {:reply, new_game, new_game}
+
+    assert Server.handle_call({:computer_move}, :ok, old_game) == {:reply, new_game, new_game}
   end
 end

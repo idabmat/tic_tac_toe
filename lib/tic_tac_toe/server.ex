@@ -7,20 +7,20 @@ defmodule TicTacToe.Server do
   end
 
   def init(game_mode) do
-    { :ok, Game.new(game_mode) }
+    {:ok, Game.new(game_mode)}
   end
 
-  def handle_call({ :game_state }, _from, game) do
-    { :reply, game, game }
+  def handle_call({:game_state}, _from, game) do
+    {:reply, game, game}
   end
 
-  def handle_call({ :player_move, position }, _from, game) do
+  def handle_call({:player_move, position}, _from, game) do
     game = Game.player_move(game, position)
-    { :reply, game, game }
+    {:reply, game, game}
   end
 
-  def handle_call({ :computer_move }, _from, game) do
+  def handle_call({:computer_move}, _from, game) do
     game = Game.computer_move(game)
-    { :reply, game, game }
+    {:reply, game, game}
   end
 end

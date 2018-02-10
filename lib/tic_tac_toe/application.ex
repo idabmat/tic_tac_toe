@@ -5,12 +5,12 @@ defmodule TicTacToe.Application do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(TicTacToe.Server, args),
+      worker(TicTacToe.Server, args)
     ]
 
     options = [
-      name:     TicTacToe.Supervisor,
-      strategy: :simple_one_for_one,
+      name: TicTacToe.Supervisor,
+      strategy: :simple_one_for_one
     ]
 
     Supervisor.start_link(children, options)

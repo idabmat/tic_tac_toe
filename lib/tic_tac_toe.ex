@@ -4,14 +4,14 @@ defmodule TicTacToe do
   end
 
   def game_state(game_pid) do
-    GenServer.call(game_pid, { :game_state })
+    GenServer.call(game_pid, {:game_state})
   end
 
   def player_move(game_pid, position) do
-    GenServer.call(game_pid, { :player_move, position })
+    GenServer.call(game_pid, {:player_move, position})
   end
 
   def computer_move(game_pid) do
-    GenServer.call(game_pid, { :computer_move }, 10_000)
+    GenServer.call(game_pid, {:computer_move}, 10_000)
   end
 end

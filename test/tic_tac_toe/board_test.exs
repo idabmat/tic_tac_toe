@@ -8,16 +8,18 @@ defmodule TicTacToe.BoardTest do
       [nil, nil, nil],
       [nil, nil, nil]
     ]
-    assert Board.new == empty_board
+
+    assert Board.new() == empty_board
   end
 
   test "accepts a move" do
     board = Board.new()
+
     assert Board.receive_move(board, :player1, 1) == [
-      [:player1, nil, nil],
-      [nil, nil, nil],
-      [nil, nil, nil]
-    ]
+             [:player1, nil, nil],
+             [nil, nil, nil],
+             [nil, nil, nil]
+           ]
   end
 
   test "rejects invalid move" do
@@ -26,11 +28,12 @@ defmodule TicTacToe.BoardTest do
       [nil, nil, nil],
       [nil, nil, nil]
     ]
+
     assert Board.receive_move(board, :computer, 1) == [
-      [:player1, nil, nil],
-      [nil, nil, nil],
-      [nil, nil, nil]
-    ]
+             [:player1, nil, nil],
+             [nil, nil, nil],
+             [nil, nil, nil]
+           ]
   end
 
   test "rejects out of bound moves" do
@@ -39,11 +42,12 @@ defmodule TicTacToe.BoardTest do
       [nil, nil, nil],
       [nil, nil, nil]
     ]
+
     assert Board.receive_move(board, :computer, 11) == [
-      [:player1, nil, nil],
-      [nil, nil, nil],
-      [nil, nil, nil]
-    ]
+             [:player1, nil, nil],
+             [nil, nil, nil],
+             [nil, nil, nil]
+           ]
   end
 
   test "has rows" do
@@ -63,6 +67,7 @@ defmodule TicTacToe.BoardTest do
       [nil, nil, nil],
       [nil, nil, :computer]
     ]
+
     column1 = [:player1, nil, nil]
     column2 = [nil, nil, nil]
     column3 = [:player1, nil, :computer]
@@ -78,6 +83,7 @@ defmodule TicTacToe.BoardTest do
       [nil, nil, nil],
       [nil, nil, :computer]
     ]
+
     diagonal1 = [:player1, nil, :computer]
     diagonal2 = [:player1, nil, nil]
     assert Board.diagonal(board, 1) == diagonal1
@@ -91,6 +97,7 @@ defmodule TicTacToe.BoardTest do
       [nil, nil, :computer],
       [:player1, :computer, :player1]
     ]
+
     assert Board.empty_cells(board) == [{1, 0}, {1, 1}]
   end
 
@@ -100,16 +107,17 @@ defmodule TicTacToe.BoardTest do
       [nil, nil, :computer],
       [:player1, :computer, :player1]
     ]
+
     assert Board.triplets(board) == [
-      [:player1, :computer, :player1],
-      [nil, nil, :computer],
-      [:player1, :computer, :player1],
-      [:player1, nil, :player1],
-      [:computer, nil, :computer],
-      [:player1, :computer, :player1],
-      [:player1, nil, :player1],
-      [:player1, nil, :player1]
-    ]
+             [:player1, :computer, :player1],
+             [nil, nil, :computer],
+             [:player1, :computer, :player1],
+             [:player1, nil, :player1],
+             [:computer, nil, :computer],
+             [:player1, :computer, :player1],
+             [:player1, nil, :player1],
+             [:player1, nil, :player1]
+           ]
   end
 
   test "Size" do
@@ -118,6 +126,7 @@ defmodule TicTacToe.BoardTest do
       [nil, nil, :computer],
       [:player1, :computer, :player1]
     ]
+
     assert Board.size(board) == 3
   end
 
@@ -127,6 +136,7 @@ defmodule TicTacToe.BoardTest do
       [nil, nil, :computer],
       [:player1, :computer, :player1]
     ]
+
     assert Board.indexes_from_position(1, board) == {0, 0}
     assert Board.indexes_from_position(2, board) == {0, 1}
     assert Board.indexes_from_position(3, board) == {0, 2}
@@ -144,6 +154,7 @@ defmodule TicTacToe.BoardTest do
       [nil, nil, :computer],
       [:player1, :computer, :player1]
     ]
+
     assert Board.position_from_indexes({0, 0}, board) == 1
     assert Board.position_from_indexes({0, 1}, board) == 2
     assert Board.position_from_indexes({0, 2}, board) == 3

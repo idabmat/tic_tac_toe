@@ -8,13 +8,15 @@ defmodule TicTacToe.Board do
   end
 
   def receive_move(board, _, position) when position not in 1..9, do: board
+
   def receive_move(board, player, position) do
-    { row_index, column_index } = indexes_from_position(position, board)
+    {row_index, column_index} = indexes_from_position(position, board)
     empty? = cell_empty?(board, row_index, column_index)
     insert_into(board, row_index, column_index, player, empty?)
   end
 
   def insert_into(board, _, _, _, false), do: board
+
   def insert_into(board, row_index, column_index, player, _empty) do
     new_row = build_new_row(board, row_index, column_index, player)
     board |> List.replace_at(row_index, new_row)
@@ -29,14 +31,13 @@ defmodule TicTacToe.Board do
   def cell_empty?(board, row_index, column_index) do
     board
     |> Enum.at(row_index)
-    |> Enum.at(column_index)
-    == nil
+    |> Enum.at(column_index) == nil
   end
 
   def indexes_from_position(position, board) do
-    row_index   = div(position - 1, size(board))
+    row_index = div(position - 1, size(board))
     column_index = rem(position - 1, size(board))
-    { row_index, column_index }
+    {row_index, column_index}
   end
 
   def position_from_indexes({row_index, column_index}, board) do
@@ -61,7 +62,8 @@ defmodule TicTacToe.Board do
   def diagonals(board), do: [diagonal(board, 1), diagonal(board, 2)]
 
   def empty_cells(board) do
-    for x <- 0..(size(board) - 1), y <- 0..(size(board) - 1),
+    for x <- 0..(size(board) - 1),
+        y <- 0..(size(board) - 1),
         board |> Enum.at(x) |> Enum.at(y) == nil,
         do: {x, y}
   end
@@ -76,7 +78,7 @@ defmodule TicTacToe.Board do
 
   defp transpose(board) do
     board
-    |> Enum.zip
+    |> Enum.zip()
     |> Enum.map(&Tuple.to_list/1)
   end
 end
