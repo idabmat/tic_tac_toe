@@ -1,4 +1,4 @@
-# TicTacToe
+# TicTacToe [![CircleCI](https://circleci.com/gh/idabmat/tic_tac_toe.svg?style=svg)](https://circleci.com/gh/idabmat/tic_tac_toe)
 
 Elixir implementation of a Tic Tac Toe game.
 
