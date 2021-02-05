@@ -1,17 +1,23 @@
 defmodule TicTacToe do
+  @moduledoc """
+  Public functions for playing the game.
+  """
+
+  alias TicTacToe.Board
+  alias TicTacToe.Game
+
+  @spec new_game(Game.mode()) :: Game.t()
   def new_game(game_mode \\ :original) do
-    Supervisor.start_child(TicTacToe.Supervisor, [game_mode])
+    Game.new(game_mode)
   end
 
-  def game_state(game_pid) do
-    GenServer.call(game_pid, {:game_state})
+  @spec player_move(Game.t(), Board.position()) :: Game.t()
+  def player_move(game, position) do
+    Game.player_move(game, position)
   end
 
-  def player_move(game_pid, position) do
-    GenServer.call(game_pid, {:player_move, position})
-  end
-
-  def computer_move(game_pid) do
-    GenServer.call(game_pid, {:computer_move}, 10_000)
+  @spec computer_move(Game.t()) :: Game.t()
+  def computer_move(game) do
+    Game.computer_move(game)
   end
 end
