@@ -4,7 +4,7 @@ defmodule TicTacToe.Mixfile do
   def project do
     [
       app: :tic_tac_toe,
-      version: "2.0.0",
+      version: "2.0.1",
       description: "A TicTacToe game engine",
       package: package(),
       elixir: "~> 1.7",

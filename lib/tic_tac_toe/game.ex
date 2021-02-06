@@ -15,11 +15,11 @@ defmodule TicTacToe.Game do
   )
 
   @type t :: %__MODULE__{
-    board: Board.t(),
-    winner: Scoring.t(),
-    current_player: nil | Board.player(),
-    game_mode: mode()
-  }
+          board: Board.t(),
+          winner: Scoring.t(),
+          current_player: nil | Board.player(),
+          game_mode: mode()
+        }
 
   @type mode :: :original | :notakto | :misere
 
@@ -39,10 +39,12 @@ defmodule TicTacToe.Game do
     do: make_move(game, :player1, position, game.current_player == :player1)
 
   @spec computer_move(t()) :: t()
-  def computer_move(game) do
+  def computer_move(game = %{winner: nil}) do
     position = Ai.choose_next_position(game)
     computer_move(game, position)
   end
+
+  def computer_move(game), do: game
 
   @spec computer_move(t(), Board.position()) :: t()
   def computer_move(game, position),

@@ -1,28 +1,22 @@
 defmodule TicTacToeTest do
   use ExUnit.Case
 
-  describe "Original game" do
-    test "play a game" do
-      game = TicTacToe.new_game(:original)
-      play_original_game(game)
-    end
+  test "play an original game" do
+    game = TicTacToe.new_game(:original)
+    play_original_game(game)
   end
 
-  describe "Notakto game" do
-    test "play a game" do
-      game = TicTacToe.new_game(:notakto)
-      play_notakto_game(game)
-    end
+  test "play a notakto game" do
+    game = TicTacToe.new_game(:notakto)
+    play_notakto_game(game)
   end
 
-  describe "Misere game" do
-    test "play a game" do
-      game = TicTacToe.new_game(:misere)
-      play_misere_game(game)
-    end
+  test "play a misere game" do
+    game = TicTacToe.new_game(:misere)
+    play_misere_game(game)
   end
 
-  def play_original_game(game = %{current_player: :computer}) do
+  defp play_original_game(game = %{current_player: :computer}) do
     game = TicTacToe.computer_move(game)
 
     assert game.board == [
@@ -98,7 +92,7 @@ defmodule TicTacToeTest do
     assert game.winner == :draw
   end
 
-  def play_original_game(game = %{current_player: :player1}) do
+  defp play_original_game(game = %{current_player: :player1}) do
     game = TicTacToe.player_move(game, 5)
 
     assert game.board == [
@@ -174,7 +168,7 @@ defmodule TicTacToeTest do
     assert game.winner == :draw
   end
 
-  def play_notakto_game(game = %{current_player: :computer}) do
+  defp play_notakto_game(game = %{current_player: :computer}) do
     game = TicTacToe.computer_move(game)
 
     assert game.board == [
@@ -202,7 +196,7 @@ defmodule TicTacToeTest do
     assert game.winner == :computer
   end
 
-  def play_notakto_game(game = %{current_player: :player1}) do
+  defp play_notakto_game(game = %{current_player: :player1}) do
     game = TicTacToe.player_move(game, 1)
 
     assert game.board == [
@@ -237,7 +231,7 @@ defmodule TicTacToeTest do
            ]
   end
 
-  def play_misere_game(game = %{current_player: :computer}) do
+  defp play_misere_game(game = %{current_player: :computer}) do
     game = TicTacToe.computer_move(game)
 
     assert game.board == [
@@ -289,7 +283,7 @@ defmodule TicTacToeTest do
     assert game.winner == :computer
   end
 
-  def play_misere_game(game = %{current_player: :player1}) do
+  defp play_misere_game(game = %{current_player: :player1}) do
     game = TicTacToe.player_move(game, 1)
 
     assert game.board == [

@@ -2,12 +2,48 @@ defmodule TicTacToe.GameTest do
   use ExUnit.Case
   alias TicTacToe.Game
 
-  test "Starting a new game initializes an empty board" do
-    assert Game.new().board == [
-             [nil, nil, nil],
-             [nil, nil, nil],
-             [nil, nil, nil]
-           ]
+  setup do
+    blank_board = [
+      [nil, nil, nil],
+      [nil, nil, nil],
+      [nil, nil, nil]
+    ]
+
+    computer_win = [
+      [:computer, :computer, :computer],
+      [nil, nil, nil],
+      [nil, nil, nil]
+    ]
+
+    player_win = [
+      [nil, nil, :player1],
+      [nil, :player1, nil],
+      [:player1, nil, nil]
+    ]
+
+    draw = [
+      [:computer, :player1, :player1],
+      [:player1, :computer, :computer],
+      [:player1, :computer, :player1]
+    ]
+
+    one_left = [
+      [:computer, :player1, nil],
+      [:player1, :computer, :computer],
+      [:player1, :computer, :player1]
+    ]
+
+    [
+      blank_board: blank_board,
+      computer_win: computer_win,
+      player_win: player_win,
+      draw: draw,
+      one_left: one_left
+    ]
+  end
+
+  test "Starting a new game initializes an empty board", %{blank_board: board} do
+    assert Game.new().board == board
   end
 
   test "Starting a game has no winner" do
@@ -18,57 +54,27 @@ defmodule TicTacToe.GameTest do
     assert Game.new().current_player in [:player1, :computer]
   end
 
-  test "Identify when the computer won" do
-    board = [
-      [:computer, :computer, :computer],
-      [nil, nil, nil],
-      [nil, nil, nil]
-    ]
-
+  test "Identify when the computer won", %{computer_win: board} do
     game = %Game{board: board} |> Game.score()
     assert game.winner == :computer
   end
 
-  test "Identify when the player won" do
-    board = [
-      [nil, nil, :player1],
-      [nil, :player1, nil],
-      [:player1, nil, nil]
-    ]
-
+  test "Identify when the player won", %{player_win: board} do
     game = %Game{board: board} |> Game.score()
     assert game.winner == :player1
   end
 
-  test "Identify when the game ended in a draw" do
-    board = [
-      [:computer, :player1, :player1],
-      [:player1, :computer, :computer],
-      [:player1, :computer, :player1]
-    ]
-
+  test "Identify when the game ended in a draw", %{draw: board} do
     game = %Game{board: board} |> Game.score()
     assert game.winner == :draw
   end
 
-  test "Identify when the game is not over" do
-    board = [
-      [:computer, :player1, nil],
-      [:player1, :computer, :computer],
-      [:player1, :computer, :player1]
-    ]
-
+  test "Identify when the game is not over", %{one_left: board} do
     game = %Game{board: board} |> Game.score()
     assert game.winner == nil
   end
 
-  test "player can move on its turn" do
-    board = [
-      [:computer, :player1, nil],
-      [:player1, :computer, :computer],
-      [:player1, :computer, :player1]
-    ]
-
+  test "player can move on its turn", %{one_left: board} do
     game = %Game{board: board, current_player: :player1} |> Game.player_move(3)
 
     assert game.board == [
@@ -78,25 +84,13 @@ defmodule TicTacToe.GameTest do
            ]
   end
 
-  test "player cannot move on computer turn" do
-    board = [
-      [:computer, :player1, nil],
-      [:player1, :computer, :computer],
-      [:player1, :computer, :player1]
-    ]
-
+  test "player cannot move on computer turn", %{one_left: board} do
     game = %Game{board: board, current_player: :computer} |> Game.player_move(3)
     assert game.board == board
     assert game.current_player == :computer
   end
 
-  test "computer can move on its turn" do
-    board = [
-      [:computer, :player1, nil],
-      [:player1, :computer, :computer],
-      [:player1, :computer, :player1]
-    ]
-
+  test "computer can move on its turn", %{one_left: board} do
     game = %Game{board: board, current_player: :computer} |> Game.computer_move()
 
     assert game.board == [
@@ -106,76 +100,66 @@ defmodule TicTacToe.GameTest do
            ]
   end
 
-  test "computer cannot move on player turn" do
-    board = [
-      [:computer, :player1, nil],
-      [:player1, :computer, :computer],
-      [:player1, :computer, :player1]
-    ]
-
+  test "computer cannot move on player turn", %{one_left: board} do
     game = %Game{board: board, current_player: :player1} |> Game.computer_move()
     assert game.board == board
     assert game.current_player == :player1
   end
 
-  test "invalid move does not change the board" do
-    board = [
-      [:computer, :player1, nil],
-      [:player1, :computer, :computer],
-      [:player1, :computer, :player1]
-    ]
-
-    game = %Game{board: board} |> Game.player_move(1)
+  test "invalid move does not change the board", %{one_left: board} do
+    game = %Game{board: board, current_player: :player1} |> Game.player_move(1)
     assert game.board == board
   end
 
-  test "valid move changes the player's turn" do
-    board = [
-      [:computer, :player1, nil],
-      [:player1, :computer, :computer],
-      [:player1, :computer, :player1]
-    ]
-
+  test "valid move changes the player's turn", %{one_left: board} do
     game = %Game{board: board, current_player: :player1} |> Game.player_move(3)
     assert game.current_player == :computer
   end
 
-  test "invalid move does not change the player's turn" do
-    board = [
-      [:computer, :player1, nil],
-      [:player1, :computer, :computer],
-      [:player1, :computer, :player1]
-    ]
-
+  test "invalid move does not change the player's turn", %{one_left: board} do
     game = %Game{board: board, current_player: :player1} |> Game.player_move(1)
     assert game.current_player == :player1
   end
 
-  test "valid move changes calculates the winner" do
-    board = [
-      [:computer, :player1, nil],
-      [:player1, :computer, :computer],
-      [:player1, :computer, :player1]
-    ]
-
+  test "valid move changes calculates the winner", %{one_left: board} do
     game = %Game{board: board, current_player: :player1} |> Game.player_move(3)
     assert game.winner == :draw
   end
 
-  test "game is over when there is a winner" do
-    game = %Game{winner: :player1}
-    assert Game.over?(game) == true
-  end
-
-  test "cannot move after game over" do
-    board = [
-      [:player1, :player1, :player1],
-      [nil, nil, nil],
-      [nil, nil, nil]
-    ]
-
+  test "computer cannot move after player won", %{player_win: board} do
     game =
       %Game{winner: :player1, board: board, current_player: :computer} |> Game.computer_move()
+
+    assert game.board == board
+  end
+
+  test "computer cannot move after it won", %{computer_win: board} do
+    game =
+      %Game{winner: :computer, board: board, current_player: :computer} |> Game.computer_move()
+
+    assert game.board == board
+  end
+
+  test "computer cannot move after a draw", %{draw: board} do
+    game = %Game{winner: :draw, board: board, current_player: :computer} |> Game.computer_move()
+
+    assert game.board == board
+  end
+
+  test "player cannot move after it won", %{player_win: board} do
+    game = %Game{winner: :player1, board: board, current_player: :player1} |> Game.player_move(1)
+
+    assert game.board == board
+  end
+
+  test "player cannot move after computer won", %{computer_win: board} do
+    game = %Game{winner: :computer, board: board, current_player: :player1} |> Game.player_move(1)
+
+    assert game.board == board
+  end
+
+  test "player cannot move after a draw", %{draw: board} do
+    game = %Game{winner: :draw, board: board, current_player: :player1} |> Game.player_move(1)
 
     assert game.board == board
   end
@@ -183,6 +167,11 @@ defmodule TicTacToe.GameTest do
   test "invalid moves does not change the current player" do
     game = %Game{winner: :player1, current_player: :computer} |> Game.computer_move()
     assert game.current_player == :computer
+  end
+
+  test "game is over when there is a winner" do
+    game = %Game{winner: :player1}
+    assert Game.over?(game) == true
   end
 
   test "game is over when there is a draw" do
